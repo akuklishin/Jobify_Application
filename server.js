@@ -44,7 +44,9 @@ if (process.env.NODE_ENV === "development") {
 }
 
 //upload
-app.use(express.static(path.resolve(__dirname, "./public")));
+//app.use(express.static(path.resolve(__dirname, "./public")));
+//on production
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 //use cookie parser
 app.use(cookieParser());
 //use express.js
@@ -64,8 +66,13 @@ app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "./public", "index.html"));
+// });
+
+//on production
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./public", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
 });
 
 //NOT FOUNT Middleware
